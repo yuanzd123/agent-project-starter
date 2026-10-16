@@ -7,7 +7,7 @@
 <p align="center"><strong>Give your coding agent a clean start. Keep the useful lessons. Retire the stale ones.</strong></p>
 
 <p align="center">
-  <a href="https://github.com/yuanzd123/agent-project-starter/actions/workflows/ci.yml"><img src="https://github.com/yuanzd123/agent-project-starter/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/yuanzd123/agent-project-starter/actions/workflows/ci.yml"><img src="https://github.com/yuanzd123/agent-project-starter/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-0f766e" alt="MIT license"></a>
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776ab" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/runtime_dependencies-zero-0f766e" alt="Zero third-party runtime dependencies">
