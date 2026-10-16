@@ -1,0 +1,24 @@
+name: Bug report
+description: Report a reproducible failure in initialization, checks, or memory retrieval.
+title: "bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, repository revision, and selected language. Do not include secrets.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Commands and small sanitized inputs, plus expected and actual results.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output
+      description: Include exit codes. Redact private paths, tokens, and customer data.

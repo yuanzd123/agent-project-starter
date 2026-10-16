@@ -1,0 +1,18 @@
+name: Feature or documentation improvement
+description: Describe a user need and a small, testable improvement.
+title: "idea: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior and acceptance criteria
+      description: Include simpler alternatives and whether this belongs in the core or in an example.
+    validations:
+      required: true

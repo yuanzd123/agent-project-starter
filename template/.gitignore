@@ -1,0 +1,8 @@
+# Exact local-only directory for runtime evidence and private notes.
+/.local/
+# Never copy credentials into the template. Adapt secret exclusions to the project.
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc

@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "lessons": [
+    {
+      "id": "L001",
+      "title": "One authoritative source per fact",
+      "status": "active",
+      "tags": [
+        "always",
+        "memory",
+        "记忆"
+      ],
+      "summary": "Keep rules, current state, and durable lessons separate. Tool entry points should reference shared content instead of maintaining drifting copies.",
+      "path": "docs/memory/lessons/L001.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L002",
+      "title": "Match status claims to current evidence",
+      "status": "active",
+      "tags": [
+        "always",
+        "memory",
+        "review",
+        "记忆",
+        "审查"
+      ],
+      "summary": "Implementation, testing, deployment, enablement, and real use need separate evidence. Resolve conflicts between memory and current observations.",
+      "path": "docs/memory/lessons/L002.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L003",
+      "title": "Distinguish errors from empty results",
+      "status": "active",
+      "tags": [
+        "testing",
+        "cms",
+        "database",
+        "测试",
+        "数据"
+      ],
+      "summary": "Do not turn read failures into empty values, default content, or success. Fallback behavior must be explicit and observable.",
+      "path": "docs/memory/lessons/L003.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L004",
+      "title": "Isolate the actual test resources",
+      "status": "active",
+      "tags": [
+        "testing",
+        "security",
+        "database",
+        "测试",
+        "安全"
+      ],
+      "summary": "Before local commands run, verify resolved databases, accounts, storage, and SDK configuration. Tests must not inherit production side effects.",
+      "path": "docs/memory/lessons/L004.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L005",
+      "title": "Separate task ownership from shared-resource coordination",
+      "status": "active",
+      "tags": [
+        "git",
+        "review",
+        "协作"
+      ],
+      "summary": "Preserve unrelated edits and stage exact task-owned paths. Isolate concurrent editing, and coordinate shared refs and deployment targets separately.",
+      "path": "docs/memory/lessons/L005.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L006",
+      "title": "Verification must preserve failure",
+      "status": "active",
+      "tags": [
+        "testing",
+        "harness",
+        "测试"
+      ],
+      "summary": "A failed or timed-out required check, missing executable, or missing configuration must never become PASS.",
+      "path": "docs/memory/lessons/L006.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L007",
+      "title": "Verify the actual execution path at the right depth",
+      "status": "active",
+      "tags": [
+        "testing",
+        "review",
+        "集成",
+        "测试"
+      ],
+      "summary": "Static checks and mocks establish only their own layer. External dependencies, actual configuration, and user interactions need appropriate runtime evidence.",
+      "path": "docs/memory/lessons/L007.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L008",
+      "title": "A configuration name is not a deployment identity",
+      "status": "active",
+      "tags": [
+        "release",
+        "infra",
+        "发布"
+      ],
+      "summary": "Verify the actual account, project, environment, candidate revision, and serving endpoint. Neither a filename nor a passing build proves deployment.",
+      "path": "docs/memory/lessons/L008.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L009",
+      "title": "Find authoritative data and preserve drafts",
+      "status": "active",
+      "tags": [
+        "cms",
+        "database",
+        "数据",
+        "内容"
+      ],
+      "summary": "Before content repair, identify the real data authority, preserve drafts and operational edits, and migrate by field and version.",
+      "path": "docs/memory/lessons/L009.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L010",
+      "title": "Verify durable writes, not just successful responses",
+      "status": "active",
+      "tags": [
+        "database",
+        "testing",
+        "数据"
+      ],
+      "summary": "Verify critical writes from a separate connection or transaction. Exercise concurrency, failure, and rollback instead of trusting returned objects.",
+      "path": "docs/memory/lessons/L010.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L011",
+      "title": "Fix access rules without default privilege escalation",
+      "status": "active",
+      "tags": [
+        "security",
+        "database",
+        "权限",
+        "安全"
+      ],
+      "summary": "Keep intended role and tenant boundaries. Shared capabilities and tenant-specific parameters need separate ownership.",
+      "path": "docs/memory/lessons/L011.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L012",
+      "title": "Test controls and destinations in the rendered product",
+      "status": "active",
+      "tags": [
+        "ui",
+        "web",
+        "review",
+        "界面"
+      ],
+      "summary": "Use real control semantics and behavior. Check final destinations and the relevant keyboard, pointer, and touch interactions.",
+      "path": "docs/memory/lessons/L012.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L013",
+      "title": "Give technical lessons version scope and removal conditions",
+      "status": "active",
+      "tags": [
+        "toolchain",
+        "review",
+        "memory",
+        "工具",
+        "审查"
+      ],
+      "summary": "Preserve the failure mechanism while rechecking version-specific commands and workarounds. Historical experience is not permanent truth.",
+      "path": "docs/memory/lessons/L013.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L014",
+      "title": "Protect invariants during bulk edits",
+      "status": "active",
+      "tags": [
+        "content",
+        "review",
+        "内容",
+        "审查"
+      ],
+      "summary": "Check numerical, structural, and behavioral invariants. Diagnose unexpected differences and ownership before restoring files.",
+      "path": "docs/memory/lessons/L014.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L015",
+      "title": "Control time and business time zones in tests",
+      "status": "active",
+      "tags": [
+        "testing",
+        "time",
+        "测试",
+        "时间"
+      ],
+      "summary": "Use explicit clocks and business time zones. Cover midnight and daylight-saving boundaries instead of waiting or skipping flaky tests.",
+      "path": "docs/memory/lessons/L015.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L016",
+      "title": "Treat caches and background processes as build inputs",
+      "status": "active",
+      "tags": [
+        "build",
+        "testing",
+        "构建",
+        "测试"
+      ],
+      "summary": "Isolate task-owned caches, outputs, and watchers. Investigate environment contamination before deleting shared resources.",
+      "path": "docs/memory/lessons/L016.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L901",
+      "title": "Historical framework cache and invalidation limits",
+      "status": "candidate",
+      "tags": [
+        "web",
+        "toolchain"
+      ],
+      "summary": "Historical route and cache behavior needs revalidation against the current framework, deployment mode, and real requests.",
+      "path": "docs/memory/lessons/L901.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": 30,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": null
+    },
+    {
+      "id": "L902",
+      "title": "Deployment CLI combinations and SDK login side effects",
+      "status": "candidate",
+      "tags": [
+        "infra",
+        "release",
+        "toolchain"
+      ],
+      "summary": "Historical CLI flags and SDK credential side effects are diagnostic leads, not current execution instructions.",
+      "path": "docs/memory/lessons/L902.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": 30,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": null
+    },
+    {
+      "id": "L903",
+      "title": "Database driver patches and ORM naming limits",
+      "status": "candidate",
+      "tags": [
+        "database",
+        "toolchain"
+      ],
+      "summary": "Do not copy old driver patches, ORM nesting rules, or database naming workarounds wholesale.",
+      "path": "docs/memory/lessons/L903.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": 30,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": null
+    },
+    {
+      "id": "L990",
+      "title": "Automatic memory commits and pushes",
+      "status": "deprecated",
+      "tags": [
+        "memory"
+      ],
+      "summary": "Do not import historical memory auto-publish hooks.",
+      "path": "docs/memory/lessons/L990.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": null,
+      "retirement_reason": "The historical authorization was revoked; automatic publishing can disclose private information."
+    },
+    {
+      "id": "L991",
+      "title": "Mandatory model settings and endless review loops",
+      "status": "superseded",
+      "tags": [
+        "review"
+      ],
+      "summary": "Do not inherit fixed model/effort settings, unconditional multi-agent execution, or full checks on every turn.",
+      "path": "docs/memory/lessons/L991.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": "L007",
+      "retirement_reason": "A previous project's preference is not a general technical requirement, and repeated checks can waste resources."
+    }
+  ]
+}

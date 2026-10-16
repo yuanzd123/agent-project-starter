@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "lessons": [
+    {
+      "id": "L001",
+      "title": "一个事实只维护一个权威来源",
+      "status": "active",
+      "tags": [
+        "always",
+        "memory",
+        "记忆"
+      ],
+      "summary": "指令、当前状态和长期经验分层维护，工具入口引用同一正文，避免复制后互相漂移。",
+      "path": "docs/memory/lessons/L001.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L002",
+      "title": "证据分层，不把旧状态当成今天",
+      "status": "active",
+      "tags": [
+        "always",
+        "memory",
+        "review",
+        "记忆",
+        "审查"
+      ],
+      "summary": "实现、检查通过、部署、启用和真实使用分别举证；记忆与当前证据冲突时先核实。",
+      "path": "docs/memory/lessons/L002.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L003",
+      "title": "失败与空结果必须区分",
+      "status": "active",
+      "tags": [
+        "testing",
+        "cms",
+        "database",
+        "测试",
+        "数据"
+      ],
+      "summary": "读取失败不能伪装成空值、默认内容或成功，恢复策略必须显式且可观测。",
+      "path": "docs/memory/lessons/L003.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L004",
+      "title": "测试资源隔离到实际身份",
+      "status": "active",
+      "tags": [
+        "testing",
+        "security",
+        "database",
+        "测试",
+        "安全"
+      ],
+      "summary": "启动本地命令前确认实际数据库、账号、存储和 SDK 配置；测试不继承生产副作用。",
+      "path": "docs/memory/lessons/L004.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L005",
+      "title": "任务改动和共享资源分别隔离",
+      "status": "active",
+      "tags": [
+        "git",
+        "review",
+        "协作"
+      ],
+      "summary": "保留无关改动，精确暂存；并行编辑用独立工作树，共享引用和环境单独协调。",
+      "path": "docs/memory/lessons/L005.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L006",
+      "title": "验证入口不能吞掉失败",
+      "status": "active",
+      "tags": [
+        "testing",
+        "harness",
+        "测试"
+      ],
+      "summary": "必要检查失败、超时、命令缺失或配置缺失，都不能成为 PASS。",
+      "path": "docs/memory/lessons/L006.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L007",
+      "title": "按风险验证实际执行路径",
+      "status": "active",
+      "tags": [
+        "testing",
+        "review",
+        "集成",
+        "测试"
+      ],
+      "summary": "静态检查和 mock 只证明对应层级；外部依赖、真实配置和用户交互需要适当的运行证据。",
+      "path": "docs/memory/lessons/L007.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L008",
+      "title": "配置名称不是发布目标身份",
+      "status": "active",
+      "tags": [
+        "release",
+        "infra",
+        "发布"
+      ],
+      "summary": "核对实际账号、项目、环境、候选修订和运行入口，不能从配置文件名或构建成功推断上线。",
+      "path": "docs/memory/lessons/L008.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L009",
+      "title": "数据修复先确认权威值与草稿",
+      "status": "active",
+      "tags": [
+        "cms",
+        "database",
+        "数据",
+        "内容"
+      ],
+      "summary": "修改内容前找真实数据源，保留草稿与运营编辑，按字段和版本处理迁移。",
+      "path": "docs/memory/lessons/L009.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L010",
+      "title": "验证写入真正持久化",
+      "status": "active",
+      "tags": [
+        "database",
+        "testing",
+        "数据"
+      ],
+      "summary": "关键写入用独立连接或事务读回，并测试并发、失败和回滚，不只相信返回对象。",
+      "path": "docs/memory/lessons/L010.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L011",
+      "title": "权限与租户边界不能靠提权绕过",
+      "status": "active",
+      "tags": [
+        "security",
+        "database",
+        "权限",
+        "安全"
+      ],
+      "summary": "修访问规则而非默认提升角色，租户专属参数与公共能力分开维护。",
+      "path": "docs/memory/lessons/L011.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L012",
+      "title": "交互与链接检查最终呈现",
+      "status": "active",
+      "tags": [
+        "ui",
+        "web",
+        "review",
+        "界面"
+      ],
+      "summary": "控件应有真实语义和行为，验证最终页面目标以及键盘、鼠标和触屏关键交互。",
+      "path": "docs/memory/lessons/L012.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L013",
+      "title": "技术经验注明版本与失效条件",
+      "status": "active",
+      "tags": [
+        "toolchain",
+        "review",
+        "memory",
+        "工具",
+        "审查"
+      ],
+      "summary": "保留故障机制，复核具体版本命令与 workaround；旧经验不是永久真理。",
+      "path": "docs/memory/lessons/L013.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L014",
+      "title": "批量编辑保护不应变化的内容",
+      "status": "active",
+      "tags": [
+        "content",
+        "review",
+        "内容",
+        "审查"
+      ],
+      "summary": "用数值、结构和行为不变量检查大批量修改，差异先诊断归属再处理。",
+      "path": "docs/memory/lessons/L014.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L015",
+      "title": "时间测试固定时钟与业务时区",
+      "status": "active",
+      "tags": [
+        "testing",
+        "time",
+        "测试",
+        "时间"
+      ],
+      "summary": "显式固定时钟与业务时区，覆盖跨日和夏令时等边界，避免靠等时间或跳过测试解决。",
+      "path": "docs/memory/lessons/L015.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L016",
+      "title": "缓存和后台进程也是构建输入",
+      "status": "active",
+      "tags": [
+        "build",
+        "testing",
+        "构建",
+        "测试"
+      ],
+      "summary": "隔离任务的缓存、产物与 watcher，怀疑环境污染时先举证，不盲删全局资源。",
+      "path": "docs/memory/lessons/L016.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Prior engineering incidents, generalized and scope-reviewed 2026-10-15. See IMPORT_REVIEW.md. This is not target-project runtime verification.",
+      "superseded_by": null
+    },
+    {
+      "id": "L901",
+      "title": "框架缓存与失效 API 的历史限制",
+      "status": "candidate",
+      "tags": [
+        "web",
+        "toolchain"
+      ],
+      "summary": "旧版本的缓存与路由失效限制，需对当前框架、部署模式和真实请求重新验证。",
+      "path": "docs/memory/lessons/L901.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": 30,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": null
+    },
+    {
+      "id": "L902",
+      "title": "部署 CLI 参数组合与 SDK 登录副作用",
+      "status": "candidate",
+      "tags": [
+        "infra",
+        "release",
+        "toolchain"
+      ],
+      "summary": "历史 CLI 参数及 SDK 凭据副作用只可作为排查线索。",
+      "path": "docs/memory/lessons/L902.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": 30,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": null
+    },
+    {
+      "id": "L903",
+      "title": "数据库驱动补丁与 ORM 命名限制",
+      "status": "candidate",
+      "tags": [
+        "database",
+        "toolchain"
+      ],
+      "summary": "旧驱动补丁、ORM 嵌套命名和数据库标识限制不能整体照搬。",
+      "path": "docs/memory/lessons/L903.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": 30,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": null
+    },
+    {
+      "id": "L990",
+      "title": "记忆更新后自动提交和推送",
+      "status": "deprecated",
+      "tags": [
+        "memory"
+      ],
+      "summary": "不启用旧项目的自动上传记忆钩子。",
+      "path": "docs/memory/lessons/L990.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": null,
+      "retirement_reason": "历史授权已撤销，且自动上传可能带入私密信息。"
+    },
+    {
+      "id": "L991",
+      "title": "所有任务强制固定模型与无限审查",
+      "status": "superseded",
+      "tags": [
+        "review"
+      ],
+      "summary": "不继承固定模型、固定 effort、每轮全套构建和无限审查循环。",
+      "path": "docs/memory/lessons/L991.md",
+      "reviewed_on": "2026-10-15",
+      "review_after_days": null,
+      "evidence": "Legacy advice evaluated during import; exact old project data deliberately excluded. See IMPORT_REVIEW.md.",
+      "superseded_by": "L007",
+      "retirement_reason": "原项目偏好不是跨项目技术要求，逐轮重复检查会浪费资源。"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+name: Reusable lesson
+description: Propose a scoped engineering lesson with evidence and an expiry condition.
+title: "lesson: "
+labels: [lesson]
+body:
+  - type: textarea
+    id: mechanism
+    attributes:
+      label: Trigger, cause, and action
+      description: Explain the failure mechanism and when the advice applies. Avoid project-specific private data.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and validation
+      description: Public primary source or a sanitized reproduction. Include relevant versions.
+    validations:
+      required: true
+  - type: textarea
+    id: expiry
+    attributes:
+      label: What would make this lesson obsolete?
+      description: Removal conditions, version limits, and a suggested review interval.
+    validations:
+      required: true
