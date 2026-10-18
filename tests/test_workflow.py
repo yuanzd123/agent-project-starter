@@ -296,10 +296,14 @@ class WorkflowTests(unittest.TestCase):
         self.run_workflow()
         self.assertTrue(self.workflow().verify())
         path = self.root / 'app.py'
-        old = path.read_text()
-        path.write_text(old + '# changed after acceptance\n')
+        old = path.read_bytes()
+        path.write_bytes(old + b'# changed after acceptance\n')
         self.assertFalse(self.workflow().verify())
-        path.write_text(old)
+        # Acceptance binds exact bytes, including line endings. Text-mode restoration
+        # changes LF to CRLF on Windows and must not count as the accepted content.
+        path.write_bytes(old.replace(b'\n', b'\r\n'))
+        self.assertFalse(self.workflow().verify())
+        path.write_bytes(old)
         self.assertTrue(self.workflow().verify())
         harness = self.root / 'harness/config.json'
         data = json.loads(harness.read_text())
