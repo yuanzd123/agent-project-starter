@@ -30,3 +30,7 @@ python3 scripts/memory.py check
 ```
 
 Keep this entry under 8 KB, MEMORY under 5 KB and LATEST under 8 KB. Split growing topics rather than append an endless log. Use .local/ for ignored private material and runtime artifacts. Do not commit actual credentials, customer data or borrowed project histories.
+
+## Optional model workflow
+
+Use [the tiered workflow guide](docs/workflows/tiered-workflow.md) only when execution orchestration is requested. Defaults are offline simulation. Model proposals cannot alter scope, checks, budgets or authority. Required commands and independent review must accept the final content/configuration; `python3 workflow/run.py verify` detects stale acceptance. Do not retry an uncertain external call or enable `--allow-real` without authorization.

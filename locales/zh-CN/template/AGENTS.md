@@ -30,3 +30,7 @@ python3 scripts/memory.py check
 ```
 
 本入口保持小于 8 KB，MEMORY 小于 5 KB，LATEST 小于 8 KB。超过时按主题拆分，不追加无限日志。临时产物与私人材料放在忽略的 .local/ 或获准的外部位置。
+
+## 可选模型工作流
+
+需要执行编排时使用[分层工作流指南](docs/workflows/tiered-workflow.md)。默认是离线模拟。模型提案不能改变范围、检查、预算或授权。最终内容与配置必须通过真实必要检查和独立审查；`python3 workflow/run.py verify` 检测验收过期。不盲目重发结果不明的外部调用，没有授权不启用 --allow-real。

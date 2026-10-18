@@ -39,3 +39,7 @@ jobs:
         run: python tools/check_docs.py
       - name: Offline demo
         run: python tools/demo.py
+      - name: Optional workflow offline scenarios
+        run: python tools/workflow_demo.py
+      - name: Offline strategy comparison
+        run: python tools/workflow_benchmark.py

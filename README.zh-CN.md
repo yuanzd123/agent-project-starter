@@ -2,11 +2,11 @@
 
 # Agent Project Starter
 
-**给 coding agent 一个清晰的起点。保留有用经验，让过时建议退出上下文。**
+**共享项目记忆。可选分层模型执行。独立工程验收。**
 
 [English](README.md) · **简体中文**
 
-一份可独立复制的初始化 Prompt，加上一套轻量本地工具：共享项目 memory、不会把失败当成功的 harness，以及有适用范围和复核日期的 lessons。
+一份可独立复制的初始化 Prompt，加上一套轻量本地工具：共享项目 memory、可选分层模型执行、独立工程验收，以及有适用范围和复核日期的 lessons。
 
 **直接使用：[中文 Prompt](BOOTSTRAP_PROMPT.zh-CN.md) · [English Prompt](BOOTSTRAP_PROMPT.md)。** 填写项目目标，交给 agent，让它适配你实际的代码与技术栈。
 
@@ -18,6 +18,7 @@
 | 旧 workaround 被永久沿用 | active / candidate / deprecated / superseded 生命周期 |
 | 每次都加载一大堆历史 | 按任务标签检索，默认最多 5 条、4500 字符 |
 | 没跑检查却宣布全绿 | 必要检查缺失或失败时非零退出 |
+| 模型执行需要预算和独立验收 | 可选串行角色、持久化预算、真实检查与只读审查 |
 | 初始化覆盖已有工作 | 默认预览、完整冲突检查、不提供强制覆盖 |
 
 工具本身不需要账号、API key、遥测、向量数据库或 Python 第三方运行依赖。你使用的 agent 和项目命令可能有各自的要求。
@@ -53,6 +54,20 @@ python3 harness/run.py list
 
 Windows 可以使用已安装的 `python` 命令；WSL 项目优先在对应 Linux 环境运行。
 
+## 可选分层工作流：先离线体验
+
+原有 Prompt 和工具入口仍可独立使用。要体验架构者／实现者／审查者三角色，以及有限修复、升级和独立验收：
+
+```sh
+python3 tools/workflow_demo.py
+python3 tools/workflow_demo.py --scenario escalation --output .local/escalation-demo
+python3 tools/workflow_benchmark.py
+```
+
+以上为**离线模拟，检查命令真实执行**，涵盖成功、同档修复、强档升级和重试耗尽。对比入口采用固定脚本结果和人为费率，不能证明模型质量或节省比例。报告包含调用次数、usage、费用估算、耗时、命令证据和最终内容／配置哈希。
+
+普通代码默认实用档，低风险文档和机械变更可用 fast，高风险直接 strong。真实执行采用可配置 JSON CLI bridge，必须显式传入 --allow-real；实际 model ID、effort、权限和价格由操作者验证。本次验收未调用真实模型服务或付费接口。[中文配置、协议与恢复指南](docs/WORKFLOW.zh-CN.md) · [English guide](docs/WORKFLOW.md)。
+
 ## 已有项目如何使用
 
 遇到不同的现有文件，初始化器在写入前停止，保留原文件。先在空的暂存目录生成，再让 agent 按 diff 合并到已有系统。完全相同的重复执行不会改写文件。已定制内容不做自动覆盖升级。
@@ -81,12 +96,14 @@ Memory check 验证结构与复核元数据，不保证事实正确或发现全�
 
 ## 文档与贡献
 
-[Memory guide](docs/MEMORY_GUIDE.md) · [配置示例](docs/EXAMPLES.md) · [架构](docs/ARCHITECTURE.md) · [贡献指南](CONTRIBUTING.md) · [安全报告](SECURITY.md) · [版本记录](CHANGELOG.md)
+[Memory guide](docs/MEMORY_GUIDE.md) · [配置示例](docs/EXAMPLES.md) · [架构](docs/ARCHITECTURE.zh-CN.md) · [贡献指南](CONTRIBUTING.md) · [安全报告](SECURITY.md) · [版本记录](CHANGELOG.md)
 
 ```sh
 python3 -m unittest discover -s tests -v
 python3 tools/check_locales.py
 python3 tools/check_docs.py
+python3 tools/workflow_demo.py
+python3 tools/workflow_benchmark.py
 ```
 
 欢迎贡献小而可复现的修复、翻译、配置示例，以及有证据和失效条件的 lessons。若它帮你启动或接续了真实项目，欢迎点 star，或分享一个脱敏的踩坑案例。
