@@ -80,9 +80,38 @@ def clean_env(allow=()):
     return env
 
 
+
+def resolve_executable(program, cwd, env=None):
+    """Use one cwd/PATH lookup for check protection and launch; preserve symlink launch paths."""
+    environment = clean_env() if env is None else env
+    cwd = Path(cwd).absolute()
+    if os.path.dirname(program):
+        candidates = [Path(program) if Path(program).is_absolute() else cwd / program]
+    else:
+        # Relative/empty PATH entries are relative to the registered command cwd.
+        candidates = [(Path(directory) if Path(directory).is_absolute() else cwd / directory) / program
+                      for directory in os.get_exec_path(environment)]
+    extensions = environment.get('PATHEXT', '.COM;.EXE;.BAT;.CMD').split(os.pathsep) if os.name == 'nt' else []
+    for candidate in candidates:
+        names = [candidate]
+        if extensions and candidate.suffix.lower() not in {extension.lower() for extension in extensions}:
+            names += [Path(str(candidate) + extension) for extension in extensions if extension]
+        for name in names:
+            if name.is_file() and os.access(name, os.X_OK):
+                # Resolving symlinks here would change e.g. Python virtual-environment behavior.
+                return Path(os.path.abspath(name))
+    return None
+
+
 def execute(argv, cwd, timeout, payload=None, cancel=lambda: False, env=None, output_limit=1048576):
     """No shell. Bound output and kill the process group on finish, timeout or cancel."""
     started = time.monotonic()
+    environment = clean_env() if env is None else env
+    executable = resolve_executable(argv[0], cwd, environment)
+    if executable is None:
+        return {'kind': 'infrastructure', 'exit_code': None, 'stdout': '', 'stderr': '',
+                'seconds': time.monotonic() - started, 'executable': None}
+    argv = [str(executable), *argv[1:]]
     with tempfile.TemporaryFile() as stdin, tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
         if payload is not None:
             stdin.write(canonical(payload))
@@ -91,10 +120,10 @@ def execute(argv, cwd, timeout, payload=None, cancel=lambda: False, env=None, ou
             'creationflags': subprocess.CREATE_NEW_PROCESS_GROUP}
         try:
             proc = subprocess.Popen(argv, cwd=cwd, stdin=stdin, stdout=stdout, stderr=stderr,
-                                    env=clean_env() if env is None else env, shell=False, **flags)
+                                    env=environment, shell=False, **flags)
         except OSError:
             return {'kind': 'infrastructure', 'exit_code': None, 'stdout': '', 'stderr': '',
-                    'seconds': time.monotonic() - started}
+                    'seconds': time.monotonic() - started, 'executable': str(executable)}
         kind = 'completed'
         try:
             while proc.poll() is None:
@@ -132,4 +161,4 @@ def execute(argv, cwd, timeout, payload=None, cancel=lambda: False, env=None, ou
         return {'kind': kind, 'exit_code': proc.returncode,
                 'stdout': out[:output_limit].decode('utf-8', errors='replace'),
                 'stderr': err[:output_limit].decode('utf-8', errors='replace'),
-                'seconds': time.monotonic() - started}
+                'seconds': time.monotonic() - started, 'executable': str(executable)}

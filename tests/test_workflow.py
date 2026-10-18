@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT / 'template'))
 from tools.workflow_demo import prepare
 from workflow.adapters import AdapterError, CliAdapter, FakeAdapter
 from workflow.engine import Workflow, validate
-from workflow.safety import canonical, digest, execute, relative
+from workflow.safety import canonical, digest, execute, relative, resolve_executable
 
 
 class Crash(BaseException):
@@ -347,6 +347,124 @@ class WorkflowTests(unittest.TestCase):
             self.run_workflow()
         self.assertEqual(outside.read_text(), 'untouched')
 
+    @unittest.skipUnless(os.name == 'posix', 'Executable POSIX shell fixture')
+    def test_direct_executable_check_cannot_be_changed_to_fake_pass(self):
+        script = self.root / 'gates' / 'verify.sh'
+        script.parent.mkdir()
+        original = '#!/bin/sh\nexit 1\n'
+        script.write_text(original)
+        script.chmod(0o755)
+        path = self.root / 'harness/config.json'
+        harness = json.loads(path.read_text())
+        harness['projects'][0]['path'] = 'gates'
+        harness['projects'][0]['checks']['test']['commands'] = [['./verify.sh']]
+        path.write_text(json.dumps(harness))
+        self.task['allowed_files'] = ['gates/verify.sh']
+        self.task['simulation']['attempts'] = [{'changes': [{'path': 'gates/verify.sh',
+            'before': '$current', 'content': '#!/bin/sh\nexit 0\n'}]}]
+        baseline = execute(['./verify.sh'], script.parent, 5)
+        self.assertEqual(baseline['exit_code'], 1)
+        report = self.run_workflow()
+        self.assertEqual(report['status'], 'failed', 'Implementation must not replace its own acceptance executable')
+        self.assertEqual(report['tasks']['answer']['reason'], 'protected_rule')
+        self.assertEqual(script.read_text(), original)
+        self.assertEqual(report['totals']['calls'], 1)
+        self.assertFalse(any(e['role'] == 'reviewer' for e in report['ledger']))
+
+    @unittest.skipUnless(os.name == 'posix', 'Executable POSIX shell fixture')
+    def test_path_resolved_check_executable_is_protected(self):
+        script = self.root / 'checkbin' / 'accept-gate'
+        script.parent.mkdir()
+        script.write_text('#!/bin/sh\nexit 1\n')
+        script.chmod(0o755)
+        self.change_check(['accept-gate'])
+        self.task['allowed_files'] = ['checkbin/accept-gate']
+        self.task['simulation']['attempts'] = [{'changes': [{'path': 'checkbin/accept-gate',
+            'before': '$current', 'content': '#!/bin/sh\nexit 0\n'}]}]
+        # A relative PATH entry belongs to the check cwd, not this test runner's cwd.
+        with mock.patch.dict(os.environ, {'PATH': 'checkbin' + os.pathsep + os.environ.get('PATH', '')}):
+            report = self.run_workflow()
+        self.assertEqual(report['status'], 'failed')
+        self.assertEqual(report['tasks']['answer']['reason'], 'protected_rule')
+        self.assertIn('exit 1', script.read_text())
+
+    def test_interpreter_check_argument_is_canonicalized(self):
+        (self.root / 'gates').mkdir()
+        script = self.root / 'verify.py'
+        script.write_text('raise SystemExit(1)\n')
+        path = self.root / 'harness/config.json'
+        harness = json.loads(path.read_text())
+        harness['projects'][0]['path'] = 'gates'
+        harness['projects'][0]['checks']['test']['commands'] = [['{python}', '../verify.py']]
+        path.write_text(json.dumps(harness))
+        self.task['allowed_files'] = ['verify.py']
+        self.task['simulation']['attempts'] = [{'changes': [{'path': 'verify.py',
+            'before': '$current', 'content': 'pass\n'}]}]
+        report = self.run_workflow()
+        self.assertEqual(report['status'], 'failed')
+        self.assertEqual(report['tasks']['answer']['reason'], 'protected_rule')
+        self.assertEqual(script.read_text(), 'raise SystemExit(1)\n')
+
+    @unittest.skipUnless(os.name == 'posix', 'Executable POSIX shell fixture')
+    def test_absolute_check_executable_requires_explicit_reviewed_rule_change(self):
+        script = self.root / 'verify.sh'
+        script.write_text('#!/bin/sh\nexit 1\n')
+        script.chmod(0o755)
+        self.change_check([str(script)])
+        self.task['allowed_files'] = ['verify.sh']
+        self.config['allow_rule_changes'] = ['verify.sh']
+        self.task['simulation']['attempts'] = [{'changes': [{'path': 'verify.sh',
+            'before': '$current', 'content': '#!/bin/sh\nexit 0\n'}]}]
+        rejected = self.run_workflow()
+        self.assertEqual(rejected['tasks']['answer']['reason'], 'review_rejected')
+        self.assertTrue(rejected['tasks']['answer']['change_refs'][0]['rule_change'])
+        self.contract['run_id'] = 'explicit-reviewed-executable'
+        self.task['simulation']['approved_rule_changes'] = ['verify.sh']
+        accepted = self.run_workflow()
+        self.assertEqual(accepted['status'], 'success')
+
+    @unittest.skipUnless(os.name == 'posix', 'Executable POSIX shell fixture')
+    def test_external_path_check_does_not_protect_unexecuted_same_name_file(self):
+        external = Path(self.tmp.name) / 'external-bin' / 'accept-gate'
+        external.parent.mkdir()
+        external.write_text('#!/bin/sh\nexit 0\n')
+        external.chmod(0o755)
+        decoy = self.root / 'accept-gate'
+        decoy.write_text('#!/bin/sh\nexit 1\n')
+        decoy.chmod(0o755)
+        self.change_check(['accept-gate'])
+        self.task['allowed_files'] = ['accept-gate']
+        self.task['simulation']['attempts'] = [{'changes': [{'path': 'accept-gate',
+            'before': '$current', 'content': '#!/bin/sh\nexit 7\n'}]}]
+        with mock.patch.dict(os.environ, {'PATH': str(external.parent) + os.pathsep + os.environ.get('PATH', '')}):
+            workflow = self.workflow()
+            self.assertNotIn('accept-gate', workflow.check_sources)
+            report = workflow.run()
+        self.assertEqual(report['status'], 'success')
+        checks = [c for c in report['checks'] if c['label'] == 'app/test']
+        self.assertTrue(all(c['executable'] == str(external) for c in checks))
+        self.assertTrue(all(c['exit_code'] == 0 for c in checks))
+        self.assertFalse(report['tasks']['answer']['change_refs'][0]['rule_change'])
+
+    @unittest.skipUnless(os.name == 'posix', 'Executable POSIX shell fixture')
+    def test_path_target_change_invalidates_acceptance(self):
+        executables = []
+        for directory in ('first-bin', 'second-bin'):
+            executable = Path(self.tmp.name) / directory / 'accept-gate'
+            executable.parent.mkdir()
+            executable.write_text('#!/bin/sh\nexit 0\n')
+            executable.chmod(0o755)
+            executables.append(executable)
+        self.change_check(['accept-gate'])
+        old_path = os.environ.get('PATH', '')
+        with mock.patch.dict(os.environ, {'PATH': str(executables[0].parent) + os.pathsep + old_path}):
+            self.assertEqual(self.run_workflow()['status'], 'success')
+            self.assertTrue(self.workflow().verify())
+        with mock.patch.dict(os.environ, {'PATH': str(executables[1].parent) + os.pathsep + old_path}):
+            self.assertFalse(self.workflow().verify())
+            with self.assertRaisesRegex(ValueError, 'configuration changed'):
+                self.run_workflow()
+
     def test_tests_and_control_files_cannot_be_weakened(self):
         for name in ['check_answer.py', 'harness/config.json', '.github/workflows/ci.yml']:
             with self.subTest(path=name):
@@ -643,6 +761,18 @@ print(json.dumps({'protocol_version': 1, 'changes': [], 'usage': {'input_tokens'
         with self.assertRaises(AdapterError) as caught:
             CliAdapter().call(self.request, self.provider, 5, lambda: False)
         self.assertFalse(caught.exception.uncertain)
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX interpreter symlink fixture')
+    def test_executable_lookup_preserves_interpreter_launch_alias(self):
+        alias = self.root / 'python-alias'
+        alias.symlink_to(sys.executable)
+        self.assertEqual(resolve_executable(str(alias), self.root), alias)
+        command = [str(alias), '-c', 'import sys; print(sys.executable)']
+        expected = subprocess.run(command, capture_output=True, text=True, timeout=5)
+        actual = execute(command, self.root, 5)
+        self.assertEqual(actual['exit_code'], 0)
+        self.assertEqual(actual['stdout'], expected.stdout)
+        self.assertEqual(actual['executable'], str(alias))
 
     @unittest.skipUnless(os.name == 'posix', 'POSIX process-group cleanup assertion')
     def test_timeout_cancel_and_normal_exit_clean_descendants(self):

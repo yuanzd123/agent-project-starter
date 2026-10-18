@@ -12,7 +12,7 @@ import sys
 import time
 
 from .adapters import ADAPTERS, AdapterError, CATEGORIES
-from .safety import atomic_json, canonical, content_hash, digest, execute, relative, snapshot
+from .safety import atomic_json, canonical, content_hash, digest, execute, relative, resolve_executable, snapshot
 
 STAGES = {'lint', 'typecheck', 'test', 'build'}
 TERMINAL = {'success', 'failed', 'blocked', 'cancelled'}
@@ -251,19 +251,32 @@ class Workflow:
         labels = {f"{p['name']}/{stage}" for p in harness['projects'] for stage in p['required']}
         if not set(self.config.get('check_failure_categories', {})) <= labels:
             raise ValueError('Unknown check failure category label')
-        self.check_sources = set()
+        self.check_sources, self.check_executables = set(), []
         for project in harness['projects']:
+            cwd = (self.root / project['path']).resolve()
             for stage in project['required']:
-                for command in project['checks'][stage]['commands']:
-                    for arg in command[1:]:
-                        candidate = self.root / project['path'] / arg
-                        if candidate.is_file() and candidate.resolve().is_relative_to(self.root):
+                for index, command in enumerate(project['checks'][stage]['commands']):
+                    program = sys.executable if command[0] == '{python}' else command[0]
+                    executable = resolve_executable(program, cwd)
+                    identity = None
+                    candidates = [cwd / arg for arg in command[1:]]
+                    if executable is not None:
+                        candidates.append(executable)
+                        identity = {key: (path.relative_to(self.root).as_posix() if path.is_relative_to(self.root)
+                                          else str(path))
+                                    for key, path in [('launch', executable), ('target', executable.resolve())]}
+                    self.check_executables.append({'project': project['name'], 'stage': stage,
+                                                   'command': index, 'executable': identity})
+                    for candidate in candidates:
+                        candidate = candidate.resolve()
+                        if candidate.is_file() and candidate.is_relative_to(self.root):
                             self.check_sources.add(candidate.relative_to(self.root).as_posix())
         return harness
 
     def acceptance_signature(self):
+        harness = self.load_harness()
         return digest(canonical({'workflow': self.config, 'contract': self.contract,
-                                 'harness': self.load_harness(),
+                                 'harness': harness, 'executables': self.check_executables,
                                  'runner': digest((self.root / 'harness/run.py').read_bytes())}))
 
     def save(self):
