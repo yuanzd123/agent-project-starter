@@ -13,6 +13,8 @@ python3 tools/demo.py
 python3 -m unittest discover -s tests -v
 python3 tools/check_locales.py
 python3 tools/check_docs.py
+python3 tools/workflow_demo.py
+python3 tools/workflow_benchmark.py
 ```
 
 On Windows, use `python` if that is your installed Python command. No API keys or production resources are needed.

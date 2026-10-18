@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "providers": {
+    "offline": {
+      "kind": "fake",
+      "models": [
+        "fake-fast",
+        "fake-standard",
+        "fake-strong"
+      ]
+    }
+  },
+  "tiers": {
+    "fast": {
+      "provider": "offline",
+      "model": "fake-fast",
+      "effort": null,
+      "max_input_tokens": 24000,
+      "max_output_tokens": 4000,
+      "timeout_seconds": 10,
+      "reliable_usage": true,
+      "price_per_million": {
+        "input": 0,
+        "output": 0
+      }
+    },
+    "standard": {
+      "provider": "offline",
+      "model": "fake-standard",
+      "effort": null,
+      "max_input_tokens": 24000,
+      "max_output_tokens": 4000,
+      "timeout_seconds": 10,
+      "reliable_usage": true,
+      "price_per_million": {
+        "input": 0,
+        "output": 0
+      }
+    },
+    "strong": {
+      "provider": "offline",
+      "model": "fake-strong",
+      "effort": null,
+      "max_input_tokens": 24000,
+      "max_output_tokens": 4000,
+      "timeout_seconds": 10,
+      "reliable_usage": true,
+      "price_per_million": {
+        "input": 0,
+        "output": 0
+      }
+    }
+  },
+  "roles": {
+    "architect": "strong",
+    "implementer": "standard",
+    "reviewer": "strong"
+  },
+  "policy": {
+    "fast_tier": "fast",
+    "strong_tier": "strong",
+    "same_tier_repairs": 1,
+    "strong_upgrades": 1,
+    "final_check_reserve_seconds": 5,
+    "check_timeout_seconds": 60
+  },
+  "strict_money": true,
+  "run_budget": {
+    "calls": 20,
+    "tokens": 300000,
+    "seconds": 300,
+    "usd": 0
+  },
+  "not_applicable": {},
+  "allow_rule_changes": [],
+  "control_files": [],
+  "check_failure_categories": {}
+}

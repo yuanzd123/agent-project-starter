@@ -89,6 +89,10 @@ Seed these distilled lessons, with explicit triggers instead of making every tas
 - Check numerical, structural, or behavioral invariants in bulk edits. Diagnose unexpected changes before restoring old copies over newer work.
 - Give historical workarounds version scope and removal conditions. Do not turn one incident into a permanent project-wide ritual.
 
+## Optional: bounded tiered execution
+
+Only when requested, add a small serial architect / implementer / reviewer workflow around the existing memory and harness. Low-risk tasks may skip architecture. Keep the no-account, offline entry and use fake responses for demos. Let code enforce a persisted task contract, dependencies, exact file scope, model configuration, call/token/time/money budgets, one same-tier repair and one stronger attempt by default. Do not hardcode display names as API model IDs or invent prices. Reserve final verification resources and preserve unknown usage or interrupted outcomes without blind retries. Run actual required checks, obtain a separate read-only review, and bind acceptance to the final content and configuration. Model output cannot change executable controls or override failed checks. Real external calls require explicit authorization; mock tests do not establish service integration. Do not turn the project into a large multi-agent framework or claim an optimal model combination.
+
 ## 5. Maintain and hand off
 
 - At task start, confirm the directory and relevant changes. Read the short entry and current state, then retrieve task-specific lessons. Read history only when its rationale matters.

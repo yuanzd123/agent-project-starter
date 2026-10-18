@@ -19,3 +19,9 @@ If GitHub reporting is unavailable, use the contact channel linked from [the mai
 - Timeouts terminate the direct child. Programs that detach workers need their own process-tree cleanup.
 - Memory checks validate structure and freshness metadata, not truth, completeness, or the absence of secrets.
 - The toolkit does not require an API key or send telemetry. Any agent or project command you choose to run has its own behavior and data policy.
+
+## Optional workflow
+
+The optional workflow uses a minimal environment, exact patch scopes, explicit external-call authorization and bounded subprocess execution. Its CLI protocol supplies proposals and read-only review responses; it does not turn an arbitrary executable into a sandbox. Use clean containers/OS isolation for untrusted tools. POSIX process groups are cleaned on completion/timeout/cancel; Windows timeout/cancel uses taskkill. Detached workers and already-orphaned Windows children need external containment.
+
+Strict budgets depend on an operator-verified bridge enforcing model limits and reporting all usage without hidden subcalls. Unknown external outcomes retain reservations and cannot auto-retry. Content/configuration hashes detect stale acceptance, not malicious same-user rewriting of state. Do not give production credentials to models or checks. See [the detailed boundaries](template/docs/workflows/tiered-workflow.md).

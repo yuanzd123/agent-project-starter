@@ -4,7 +4,7 @@
 
 <h1 align="center">Agent Project Starter</h1>
 
-<p align="center"><strong>Give your coding agent a clean start. Keep the useful lessons. Retire the stale ones.</strong></p>
+<p align="center"><strong>Shared project memory. Optional tiered model execution. Independent engineering checks.</strong></p>
 
 <p align="center">
   <a href="https://github.com/yuanzd123/agent-project-starter/actions/workflows/ci.yml"><img src="https://github.com/yuanzd123/agent-project-starter/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
@@ -15,7 +15,7 @@
 
 <p align="center"><strong>English</strong> · <a href="README.zh-CN.md">简体中文</a></p>
 
-A **standalone bootstrap prompt** and a small local toolkit for coding agents: shared project memory, checks that cannot silently pass, and lessons with scope and review dates. Designed around plain Markdown and JSON so you can inspect, edit, and move it between tools.
+A **standalone bootstrap prompt** and a small local toolkit for coding agents: shared project memory, optional tiered model execution, independent engineering checks, and lessons with scope and review dates. Designed around plain Markdown and JSON so you can inspect, edit, and move it between tools.
 
 **Start with the [English prompt](BOOTSTRAP_PROMPT.md) or [中文 Prompt](BOOTSTRAP_PROMPT.zh-CN.md).** Copy it into your agent, describe your project, and let the agent adapt the setup to the code you actually have.
 
@@ -23,7 +23,7 @@ A **standalone bootstrap prompt** and a small local toolkit for coding agents: s
 
 A fresh agent session can repeat yesterday's mistake. A growing memory folder can preserve yesterday's workaround long after it stops applying. A wrapper can even report success after a test fails.
 
-This starter connects three small pieces:
+This starter connects shared memory, optional execution and explicit acceptance:
 
 | Problem | Mechanism |
 | --- | --- |
@@ -31,6 +31,7 @@ This starter connects three small pieces:
 | Old advice keeps returning | Scoped lessons with active, candidate, deprecated, and superseded states |
 | Context grows without limit | Task-tag retrieval: up to five lessons and 4,500 characters by default |
 | Checks look green without proving anything | Explicit required checks; missing configuration and failures exit nonzero |
+| Model work needs bounded cost and independent acceptance | Optional serial roles, persisted budgets, real checks and read-only review |
 | Installing a template overwrites work | Preview first, conflict detection, no force-overwrite mode |
 
 This is a starter you own. No account, API key, telemetry, vector database, or third-party Python runtime package is required by the toolkit. Your chosen agent and project commands have their own requirements.
@@ -81,6 +82,20 @@ An untouched scaffold deliberately returns **NOT_CONFIGURED** for application ch
 
 On Windows, use `python` if that is your installed command. For WSL projects, run the Linux toolchain inside WSL. [Configuration and command boundaries →](template/docs/workflows/project-workflow.md)
 
+### Option C: optional tiered workflow (offline first)
+
+The existing prompt and toolkit work without orchestration. To try architect / implementer / reviewer roles, bounded repair and escalation, and independent acceptance:
+
+```sh
+python3 tools/workflow_demo.py
+python3 tools/workflow_demo.py --scenario escalation --output .local/escalation-demo
+python3 tools/workflow_benchmark.py
+```
+
+These are **offline simulations with real local checks**. The demo verifies success, repair, escalation and exhausted retries. The comparison uses fixed scripted outcomes and artificial prices; it makes no model-quality or savings claim. Reports include calls, usage, estimates, elapsed time, command evidence and final content/configuration hashes.
+
+Normal coding defaults to a practical tier; low-risk documentation/mechanical work can use a fast tier, while high risk starts strong. Real execution uses a configurable JSON CLI bridge and requires explicit `--allow-real`; model IDs, effort, access and prices must be verified by the operator. No real model service or paid call was used in validation. [Configuration, protocol, recovery and limits](docs/WORKFLOW.md) · [中文指南](docs/WORKFLOW.zh-CN.md).
+
 ### Already have a project?
 
 The installer refuses conflicting files before writing. Generate into an empty staging directory and have your agent merge the diff into existing instructions and memory. Identical re-runs are no-ops; changed project files are preserved. There is no automatic upgrade or destructive reset.
@@ -93,6 +108,7 @@ CLAUDE.md                   One-line import of AGENTS.md
 harness/
   config.json               Explicit projects and required checks
   run.py                    list / check / lint / typecheck / test / build
+workflow/                   Optional serial controller, fake/CLI adapters, config and task example
 scripts/memory.py           check / index / brief
 docs/memory/
   MEMORY.md                 Short shared entry
@@ -150,6 +166,8 @@ A small, reproducible improvement is useful: a regression test, translation corr
 python3 -m unittest discover -s tests -v
 python3 tools/check_locales.py
 python3 tools/check_docs.py
+python3 tools/workflow_demo.py
+python3 tools/workflow_benchmark.py
 ```
 
 [Contribution guide](CONTRIBUTING.md) · [Good first issues](https://github.com/yuanzd123/agent-project-starter/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) · [Report a bug](https://github.com/yuanzd123/agent-project-starter/issues/new/choose) · [Changelog](CHANGELOG.md)

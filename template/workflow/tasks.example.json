@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "run_id": "example",
+  "base_revision": null,
+  "tasks": [
+    {
+      "id": "example",
+      "requirements": "Return 42 from answer(); verify through the registered test.",
+      "risk": "low",
+      "kind": "code",
+      "depends_on": [],
+      "allowed_files": [
+        "app.py"
+      ],
+      "context_files": [],
+      "interfaces": [
+        "answer() -> int"
+      ],
+      "acceptance": [
+        "test"
+      ],
+      "budget": {
+        "calls": 6,
+        "tokens": 200000,
+        "seconds": 180,
+        "usd": 0
+      },
+      "simulation": {
+        "attempts": [
+          {
+            "changes": [
+              {
+                "path": "app.py",
+                "before": "$current",
+                "content": "def answer():\n    return 42\n"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
