@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Runnable Go harness example under `examples/go-harness` with English docs and a Chinese usage note; not part of the default checks.
 - Optional serial architect/implementer/reviewer workflow with explicit tiers, bounded repair/escalation, dependency validation and persisted task/call/patch state.
 - Task/run call, token, elapsed-time and money budgets; final verification reserves and honest unknown usage/uncertain outcomes.
 - Deterministic fake adapter and an opt-in JSON CLI protocol adapter; local contract tests, no claimed vendor service validation.

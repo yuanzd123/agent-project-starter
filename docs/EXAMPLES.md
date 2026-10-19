@@ -44,6 +44,26 @@ If package.json actually defines noninteractive typecheck, test:ci and build scr
 
 Use `path: "."` for a root-level app. Match pnpm, Yarn or another package manager to the actual project; this example is not a reason to change lockfiles. Native Windows may need a resolved launcher such as npm.cmd. Batch wrappers have their own argument interpretation; do not put untrusted shell syntax in their arguments.
 
+## Go module
+
+A runnable example lives in [`examples/go-harness`](../examples/go-harness/README.md). It uses only the standard library and `go test`, and it is not run by this repository's Python checks.
+
+```json
+{
+  "schema_version": 1,
+  "projects": [{
+    "name": "go-example",
+    "path": "examples/go-harness",
+    "required": ["test"],
+    "checks": {
+      "test": {"commands": [["go", "test", "./..."]], "timeout_seconds": 120}
+    }
+  }]
+}
+```
+
+The example was verified with Go 1.22.2. A passing run ends with `PASS: selected configured checks` and exit 0. Its failing variant (`go test -tags failing ./...`) makes the harness exit 1, and a missing `go` executable exits 2. The example README also has a short Chinese usage note (中文说明).
+
 ## Multiple projects
 
 Register another object in `projects`, each with a distinct name and repository-relative path. Run one project with `--project web`, or pass multiple selectors. Plain `check` selects all registered projects and their required stages.
