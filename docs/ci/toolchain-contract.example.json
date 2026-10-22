@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "status": "proposal_only_not_runtime_configuration",
+  "repository": "yuanzd123/agent-project-starter",
+  "baseline_sha": "d08cc420027c59c3982a3f1a2cc1381f96f0891d",
+  "proposed_required_check": "Reviewed CI / acceptance",
+  "required_matrix": [
+    {"id": "linux-py310", "os_family": "linux", "python_line": "3.10"},
+    {"id": "linux-py313", "os_family": "linux", "python_line": "3.13"},
+    {"id": "macos-py310", "os_family": "macos", "python_line": "3.10"},
+    {"id": "macos-py313", "os_family": "macos", "python_line": "3.13"},
+    {"id": "windows-py310", "os_family": "windows", "python_line": "3.10"},
+    {"id": "windows-py313", "os_family": "windows", "python_line": "3.13"}
+  ],
+  "required_checks": [
+    {"id": "regression", "argv": ["{approved_python}", "-m", "unittest", "discover", "-s", "tests", "-v"]},
+    {"id": "locales", "argv": ["{approved_python}", "tools/check_locales.py"]},
+    {"id": "docs", "argv": ["{approved_python}", "tools/check_docs.py"]},
+    {"id": "demo", "argv": ["{approved_python}", "tools/demo.py"]},
+    {"id": "workflow-scenarios", "argv": ["{approved_python}", "tools/workflow_demo.py"]},
+    {"id": "strategy-comparison", "argv": ["{approved_python}", "tools/workflow_benchmark.py"]}
+  ],
+  "approved_environments": [],
+  "observed_baseline_not_approval": [
+    {
+      "matrix_cell": "linux-py310",
+      "observed_at": "2026-10-18",
+      "job_url": "https://github.com/yuanzd123/agent-project-starter/actions/runs/39146602309/job/117731609118",
+      "image": "ubuntu-24.04",
+      "image_version": "20261012.334.1",
+      "included_software_url": "https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md",
+      "runner_version": "2.337.0",
+      "python_version": "3.10.22",
+      "architecture": "x64",
+      "cache_miss_and_download_recorded": false,
+      "provenance_approved": false
+    },
+    {
+      "matrix_cell": "linux-py313",
+      "observed_at": "2026-10-18",
+      "job_url": "https://github.com/yuanzd123/agent-project-starter/actions/runs/39146602309/job/117731609282",
+      "image": "ubuntu-24.04",
+      "image_version": "20261012.334.1",
+      "included_software_url": "https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md",
+      "runner_version": "2.337.0",
+      "python_version": "3.13.16",
+      "architecture": "x64",
+      "cache_miss_and_download_recorded": false,
+      "provenance_approved": false
+    },
+    {
+      "matrix_cell": "macos-py310",
+      "observed_at": "2026-10-18",
+      "job_url": "https://github.com/yuanzd123/agent-project-starter/actions/runs/39146602309/job/117731609622",
+      "image": "macos-26-arm64",
+      "image_version": "20261013.0424.1",
+      "included_software_url": "https://github.com/actions/runner-images/blob/macos-26-arm64/20261013.0424/images/macos/macos-26-arm64-Readme.md",
+      "runner_version": "2.337.0",
+      "python_version": "3.10.11",
+      "architecture": "arm64",
+      "cache_miss_and_download_recorded": true,
+      "provenance_approved": false
+    },
+    {
+      "matrix_cell": "macos-py313",
+      "observed_at": "2026-10-18",
+      "job_url": "https://github.com/yuanzd123/agent-project-starter/actions/runs/39146602309/job/117731609305",
+      "image": "macos-26-arm64",
+      "image_version": "20261013.0424.1",
+      "included_software_url": "https://github.com/actions/runner-images/blob/macos-26-arm64/20261013.0424/images/macos/macos-26-arm64-Readme.md",
+      "runner_version": "2.337.0",
+      "python_version": "3.13.16",
+      "architecture": "arm64",
+      "cache_miss_and_download_recorded": false,
+      "provenance_approved": false
+    },
+    {
+      "matrix_cell": "windows-py310",
+      "observed_at": "2026-10-18",
+      "job_url": "https://github.com/yuanzd123/agent-project-starter/actions/runs/39146602309/job/117731609285",
+      "image": "windows-2025-vs2026",
+      "image_version": "20261007.264.1",
+      "included_software_url": "https://github.com/actions/runner-images/blob/win25-vs2026/20261007.264/images/windows/Windows2025-VS2026-Readme.md",
+      "runner_version": "2.337.0",
+      "python_version": "3.10.11",
+      "architecture": "x64",
+      "cache_miss_and_download_recorded": false,
+      "provenance_approved": false
+    },
+    {
+      "matrix_cell": "windows-py313",
+      "observed_at": "2026-10-18",
+      "job_url": "https://github.com/yuanzd123/agent-project-starter/actions/runs/39146602309/job/117731609212",
+      "image": "windows-2025-vs2026",
+      "image_version": "20261007.264.1",
+      "included_software_url": "https://github.com/actions/runner-images/blob/win25-vs2026/20261007.264/images/windows/Windows2025-VS2026-Readme.md",
+      "runner_version": "2.337.0",
+      "python_version": "3.13.16",
+      "architecture": "x64",
+      "cache_miss_and_download_recorded": false,
+      "provenance_approved": false
+    }
+  ],
+  "environment_record_template_not_approval": {
+    "matrix_cell": null,
+    "runner_label": null,
+    "image_release": null,
+    "image_identity_evidence": null,
+    "architecture": null,
+    "bootstrap_trust_review": null,
+    "platform_trust_boundary": null,
+    "python_exact_version": null,
+    "python_absolute_path": null,
+    "python_executable_sha256": null,
+    "python_distribution_manifest_sha256": null,
+    "components_to_review": ["runner", "bootstrap-shell", "git", "python", "stdlib", "native-extensions", "dynamic-dependencies"],
+    "component_record_template": {
+      "name": null,
+      "exact_version": null,
+      "source_repository": null,
+      "source_revision": null,
+      "build_recipe_revision": null,
+      "dependencies_manifest_sha256": null,
+      "artifact_manifest_sha256": null,
+      "source_to_artifact_verification": null,
+      "side_effects_review": null
+    },
+    "review_decision": "not_reviewed",
+    "reviewed_by": null,
+    "review_evidence": null,
+    "reviewed_at": null,
+    "review_expires_at": null
+  },
+  "required_result_binding": [
+    "repository", "pr_number", "base_sha", "head_sha", "candidate_tree_sha",
+    "controller_sha", "inventory_sha256", "image_release", "architecture",
+    "toolchain_manifest_sha256", "run_id", "job_id", "matrix_cell",
+    "check_id", "argv", "exit_code", "conclusion", "log_sha256"
+  ],
+  "failure_contract": {
+    "empty_or_unapproved_inventory": "POLICY_UNAPPROVED",
+    "missing_toolchain": "TOOLCHAIN_MISSING",
+    "identity_or_digest_mismatch": "TOOLCHAIN_CHANGED",
+    "base_or_head_changed": "REVISION_CHANGED",
+    "missing_failed_cancelled_skipped_or_timed_out_cell": "BLOCK_ACCEPTANCE",
+    "automatic_toolchain_or_dependency_install": "FORBIDDEN",
+    "candidate_can_change_trusted_policy": false,
+    "candidate_can_publish_acceptance": false,
+    "hash_alone_proves_source_provenance": false,
+    "network_sandbox_implemented": false
+  }
+}
