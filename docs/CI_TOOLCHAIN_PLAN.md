@@ -1,8 +1,10 @@
 # Proposal: CI with reviewed, preinstalled toolchains
 
-Status: **proposal only; no runner or toolchain is approved by this document**.
+Status: **design proposal with offline validation primitives; no runner or toolchain is approved by this document**.
 
 [中文方案](CI_TOOLCHAIN_PLAN.zh-CN.md) · [Machine-readable draft contract](ci/toolchain-contract.example.json)
+
+Follow-up: [offline implementation and its limits](ci/IMPLEMENTATION.md) · [hosted environment investigation](ci/HOSTED_ENVIRONMENTS.md). Python 3.10's end-of-life and the missing ARM macOS 3.10 inventory are now explicit activation blockers; the existing coverage contract has not been reduced.
 
 ## Goal and current boundary
 
@@ -129,7 +131,9 @@ If an image, tool or source approval is revoked, block the affected cell and ret
 
 - Design and six-cell/check contract: prepared.
 - Approved images, exact Python patch versions and artifact digests: **not established**.
-- Verifier/controller/reporter implementation: **not implemented**.
+- Offline inventory, observation and result-consistency validator: **implemented with synthetic regression fixtures**; it does not establish authenticity or approve a real environment.
+- Machine measurement, candidate execution, trusted controller and authenticated reporter: **not implemented**.
+- Python 3.10 lifecycle decision and suitable ARM macOS environment: **unresolved**; see the linked investigation.
 - Six-platform execution and CI activation: **not performed**.
 - PR #4: remains open; this proposal does not change its merge conditions.
 

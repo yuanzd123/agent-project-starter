@@ -1,8 +1,10 @@
 # CI 改造方案：只运行已审查的预装工具链
 
-状态：**方案草案。尚未批准任何 runner、镜像或工具链，也未启用新的 CI。**
+状态：**方案草案及离线校验实现。尚未批准任何 runner、镜像或工具链，也未启用新的 CI。**
 
 [English specification](CI_TOOLCHAIN_PLAN.md) · [机器可读草案](ci/toolchain-contract.example.json)
+
+后续进展：[离线实现及边界](ci/IMPLEMENTATION.zh-CN.md) · [托管环境调查](ci/HOSTED_ENVIRONMENTS.md)。Python 3.10 已结束支持，且 ARM macOS 清单缺少 3.10，这两项成为明确的启用阻塞条件；没有缩减既有覆盖。
 
 ## 目标与建议
 
@@ -102,4 +104,4 @@ PR #4 最终还需针对新的合并候选重跑文档中的中英文检索。�
 
 环境更新或来源批准撤销时，阻塞对应任务并保留证据。只能回退到仍满足要求的已批准控制端／清单组合，不能恢复自动下载安装。自建 runner 还需遵守[更新和生命周期要求](https://docs.github.com/en/actions/reference/runners/self-hosted-runners)。
 
-目前完成的是设计与验收契约。真实环境清单、精确版本和产物哈希尚未建立；控制端与验证器尚未实现；尚未执行或启用六平台 CI。PR #4 保持 Open。
+目前已完成设计、验收契约及带合成回归样本的离线清单／观察值／结果一致性校验。它不能证明证据真实性或批准真实环境。实际环境审批、机器测量、候选执行、可信控制端和认证结果发布端尚未完成；Python 3.10 支持策略和合适的 ARM macOS 环境仍未解决。尚未执行或启用六平台 CI。PR #4 保持 Open。
